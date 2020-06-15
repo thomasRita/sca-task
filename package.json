@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel index.js --out dir build",
-    "start": "nodemon --exec babel-node index.js"
+    "start": "cross-env NODE_ENV=development npm run migrate && cross-env NODE_ENV=development node -r esm index.js",
+    "migrate": "node -r esm db/migration.js"
   },
   "repository": {
     "type": "git",
@@ -19,12 +19,17 @@
   },
   "homepage": "https://github.com/thomasRita/sca-task#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "pg": "^8.2.1",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-watch": "^7.0.0"
+    "babel-preset-env": "^1.7.0"
   }
 }
