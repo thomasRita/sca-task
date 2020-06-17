@@ -12,8 +12,8 @@ class User {
    */
   async create(data) {
       const createQuery = `INSERT INTO
-      users("id", firstname", "lastname", "email", "isAdmin", "password")
-      VALUES($1, $2, $3, $4, $5, $6)
+      users("firstname", "lastname", "email", "isAdmin", "password")
+      VALUES($1, $2, $3, $4, $5)
       returning *`;
       const values = [
           data.firstname,
