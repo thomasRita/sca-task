@@ -1,6 +1,5 @@
 import { Pool } from 'pg';
-import db from "../db";
-import logger from '../services/logger'
+import db from './index';
 
 let queryText = `
 DROP TABLE IF EXISTS users;
@@ -54,11 +53,6 @@ INSERT INTO users (
     'passkey13dc'
 );
 `;
-
-db.on('connect', () => {
-    logger.info('CONNECTED TO DATABASE')
-
-});
 
 db.query(queryText)
     .then(result => console.log(result))
