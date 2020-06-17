@@ -16,6 +16,7 @@ class UsersController {
   static async userSignup(req, res) {
       const {
         email,
+        password,
         firstname,
         lastname
       } = req.body

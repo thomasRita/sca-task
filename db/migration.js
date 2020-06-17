@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import connectionString from ".";
+import db from "../db";
 import logger from '../services/logger'
 
 let queryText = `
@@ -55,14 +55,11 @@ INSERT INTO users (
 );
 `;
 
-
-const client = new Pool({ connectionString });
-
-client.on('connect', () => {
+db.on('connect', () => {
     logger.info('CONNECTED TO DATABASE')
 
 });
 
-client.query(queryText)
+db.query(queryText)
     .then(result => console.log(result))
     .catch(error => console.log(error));
