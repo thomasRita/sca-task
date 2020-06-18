@@ -1,0 +1,83 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.3.0",
+    "title": "User Signup",
+    "description": "Creating API",
+    "termsOfService": "http://api_url/terms/",
+    "contact": {
+      "name": "SCA Team",
+      "email": "hello@wolox.co",
+      "url": "https://www.wolox.com.ar/"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+    "servers": [
+      {
+        "url": "http://localhost:3000/",
+        "description": "Local server"
+      },
+      {
+        "url": "https://api_url_production",
+        "description": "Production server"
+      }
+    ],
+    "tags": [
+      {
+        "name": "CRUD operations"
+      }
+    ],
+    "paths": {
+      "auth/signup": {
+        "post": {
+          "tags": ["CRUD operations"],
+          "description": "Sign up users",
+          "operationId": "signupUsers",
+          "parameters": [],
+          "requestBody": {
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Users"
+                  }
+                }
+                },
+              "required": true
+            },
+          "responses": {
+            "200": {
+              "description": "User successfully created"
+            },
+            "400": {
+              "description": "Invalid parameters",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Error"
+                  },
+                  "example": {
+                    "message": "User email already exist",
+                    "internal_code": "invalid_parameters"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "ApiKeyAuth": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "x-api-key"
+        }
+      }
+    
+    }
+  
+}

@@ -32,6 +32,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4",
     "pg": "^8.2.1",
+    "swagger-ui-express": "^4.1.4",
     "winston": "^3.2.1"
   },
   "devDependencies": {
