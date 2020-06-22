@@ -7,7 +7,7 @@ import HttpException from '../utils/HttpException';
  * @return {JsonResponse} - the json response
  */
 const verifyUser = (req, res, next) => {
-  if (req.user !== "id" && req.user !== "isAdmin") {
+  if (!req.user.id && req.user.isAdmin) {
     return next(new HttpException('Unauthorised'));
   }
   next();

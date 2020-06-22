@@ -11,7 +11,7 @@ const authRouter = Router();
 
 authRouter.post('/signup',  userSignupValidator, UsersController.userSignup)
 authRouter.post('/signin', userSigninValidator, UsersController.userSignin)
-authRouter.post('/admin', UsersController.adminVerify)
+authRouter.post('/admin', tokenVerification, verifyAdmin, UsersController.adminVerify)
 
 
 export default authRouter;
