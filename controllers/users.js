@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import UserModel from '../models/User'
 import hashPassword from '../utils/hash'
 import ResponseHelper from '../utils/ResponseHelper'
+// import HttpException from '../utils/HttpException';
 
 const User = new UserModel();
 /**
@@ -96,6 +97,56 @@ class UsersController {
       ResponseHelper.success(res, 200, data);
     }
   }
+
+    /**
+   * @param  {Object} req - the request object
+   * @param  {Object} res - the response object
+   * @return {JsonResponse} - the json response
+   */
+  static async adminVerify(req, res, next) {
+    const {
+      email,
+      password,
+      firstname,
+      lastname
+    } = req.body
+    const adminExists = await User.getByField('email', email)
+
+    if (adminExists) {
+        ResponseHelper.error(res, 409, {
+            message: 'Admin already exists'
+        })
+    } else {
+      const expiryTime = 60 * 60
+
+      const newAdmin = await User.create({
+          email,
+          password: hashPassword(password),
+          firstname,
+          lastname,
+          isAdmin: true,
+      })
+
+      const token = await jwt.sign(
+          {
+              id: newAdmin.id,
+              email,
+              isAdmin: true,
+          },
+          process.env.JWT_SECRET,
+          { expiresIn: expiryTime}
+      )
+    delete newAdmin.password;
+    const newAdminWithToken = Object.assign(newAdmin, {
+      token
+    });
+    ResponseHelper.success(res, 201, newAdminWithToken);
+  }
+  // if (req.user !== 'isAdmin') {
+  //   return next(new HttpException('Unauthorised'));
+  // }
+  // next();
+ }
 }
 
 export default UsersController

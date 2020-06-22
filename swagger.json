@@ -2,65 +2,77 @@
   "openapi": "3.0.1",
   "info": {
     "version": "1.3.0",
-    "title": "User Signup",
-    "description": "Creating API",
+    "title": "User Authentication",
+    "description": "Creating APIs",
     "termsOfService": "http://api_url/terms/",
-    "contact": {
-      "name": "SCA Team",
-      "email": "hello@wolox.co",
-      "url": "https://www.wolox.com.ar/"
+    "externalDocs": {
+      "name": "SCA Task",
+      "description": "Checkout the GitHub repo",
+      "url": "https://github.com/thomasRita/sca-task"
     },
     "license": {
-      "name": "Apache 2.0",
-      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+      "name": " MIT License",
+      "url": "https://opensource.org/licenses/MIT"
     }
   },
     "servers": [
       {
-        "url": "http://localhost:3000/",
+        "url": "http://localhost:3000",
+        "basePath": "/",
         "description": "Local server"
       },
       {
-        "url": "https://api_url_production",
+        "url": "https://user-auth-myapp.herokuapp.com/",
         "description": "Production server"
       }
     ],
     "tags": [
       {
-        "name": "CRUD operations"
+        "name": "Users"
       }
     ],
     "paths": {
-      "auth/signup": {
+      "/auth/signup": {
         "post": {
-          "tags": ["CRUD operations"],
+          "tags": ["User Signup"],
           "description": "Sign up users",
           "operationId": "signupUsers",
-          "parameters": [],
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "Sign up a user",
+              "schema": {
+                "$ref": "#/components/schemas/SignupUser"
+              }
+            }
+          ],
           "requestBody": {
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/Users"
+                    "$ref": "#/components/schemas/SignupUser",
+                    "type": "object"
                   }
                 }
                 },
               "required": true
             },
           "responses": {
-            "200": {
-              "description": "User successfully created"
+            "201": {
+              "description": "success"
             },
-            "400": {
-              "description": "Invalid parameters",
+            "401": {
+              "description": "error",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/Error"
+                    "$ref": "#/components/schemas/Error",
+                    "type": "object"
                   },
                   "example": {
-                    "message": "User email already exist",
-                    "internal_code": "invalid_parameters"
+                    "message": "User already exists",
+                    "internal_code": "Unauthorised user"
                   }
                 }
               }
