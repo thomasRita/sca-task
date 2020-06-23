@@ -7,7 +7,7 @@ import HttpException from '../utils/HttpException';
  * @return {*} - returns void or next()
  */
 const verifyAdmin = (req, res, next) => {
-  if (req.user !== 'isAdmin') {
+  if (!req.user.isAdmin) {
     return next(new HttpException('Unauthorised'));
   }
   next();
