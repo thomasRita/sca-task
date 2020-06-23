@@ -12,12 +12,10 @@ dotenv.config();
  */
 const tokenVerification = (req, res, next) => {
   const token = req.headers.authorization;
-  console.log(token)
 
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        console.log(err)
         return next(new HttpException('InvalidToken'));
       }
       req.user = decoded;
